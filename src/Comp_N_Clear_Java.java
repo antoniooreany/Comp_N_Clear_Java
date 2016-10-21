@@ -1,7 +1,8 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,28 +14,29 @@ public class Comp_N_Clear_Java {
         String srcPath = "D:\\cons_1\\receive\\LAST_REC.TXT";
         String dstPath = "D:\\cons_1\\base";
 
-        ArrayList holdNamesArray = ReadFromFileToArray(srcPath);
+        HashSet<String> holdNamesArray = ReadRawLinesAndWriteToArray(srcPath);
+//        for (String s:
+//             holdNamesArray) {
+//            System.out.println(s);
+//        }
+
         RemoveUnnecessaryDirectories(holdNamesArray, dstPath);
+
+
         LaunchKPlus();
     }
 
-    private static ArrayList ReadFromFileToArray(String srcPath) throws IOException {
-
-        // TODO: 21.10.2016 Realize
-        ReadRawLinesAndWriteToArray(srcPath);
-        return null;
-    }
-
-    private static void ReadRawLinesAndWriteToArray(String srcPath) throws IOException {
+    private static HashSet<String> ReadRawLinesAndWriteToArray(String srcPath) throws IOException {
         String rawLine;
         String line;
-        ArrayList<String> lines = new ArrayList<>();
+        HashSet<String> lines = new HashSet<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(srcPath))) {
             while ((rawLine = reader.readLine()) != null) {
                 line = parseLines(rawLine);
                 lines.add(line);
             }
         }
+        return lines;
     }
 
     private static String parseLines(String rawLine) {
@@ -45,10 +47,90 @@ public class Comp_N_Clear_Java {
         return line;
     }
 
-    private static void RemoveUnnecessaryDirectories(ArrayList holdNamesArray, String dstPath) {
-// TODO: 21.10.2016 Realize by Java IO
+    private static void RemoveUnnecessaryDirectories(HashSet<String> holdNamesSet, String dstPath) {
+
+        HashSet<String> dstSet = getDstDirsSet(dstPath);
+        HashSet<String> elemsToDelete = (HashSet<String>) dstSet.clone();
+
+//        for (String s :
+//                dstSet) {
+//            System.out.println(s);
+//        }
+
+        // TODO: 21.10.2016 Remove from dst everything except holdNamesSet, using deleteDirectory(File dir)
+//        HashSet<String> dirsToRemove = getDirsToRemove(holdNamesSet, dstSet);
+//        for (String s :
+//                dirsToRemove) {
+//            System.out.println(s);
+//        }
+        for (String dstSetElem :
+                dstSet) {
+            for (String holdNamesSetElem :
+                    holdNamesSet) {
+                if (dstSetElem.equals(holdNamesSetElem)) {
+                    elemsToDelete.remove(holdNamesSetElem);
+                }
+            }
+        }
+        for (String elemToDelete :
+                elemsToDelete) {
+            File dir = new File(dstPath + "//" + elemToDelete);
+            deleteDirectory(dir);
+        }
+
 
     }
+
+    private static HashSet<String> getDirsToRemove(HashSet<String> holdNamesSet, HashSet<String> dstSet) {
+        HashSet<String> dirsToRemove = new HashSet<String>();
+//        for (String s :
+//                dstSet) {
+//            System.out.println(s);
+//        }
+        for (String holdNamesSetElem :
+                holdNamesSet) {
+//            System.out.println(holdNamesSetElem);
+            dstSet.remove(holdNamesSetElem);
+        }
+
+//        Iterator iterator = holdNamesSet.iterator();
+//        while (iterator.hasNext()) {
+//            dstSet.remove(iterator.next());
+//        }
+
+        dstSet.removeAll(holdNamesSet);
+
+        return dirsToRemove;
+    }
+
+    private static HashSet<String> getDstDirsSet(String dstPath) {
+        File dstFile = new File(dstPath);
+        String[] dstDirs = dstFile.list();
+        HashSet<String> dstSet = new HashSet();
+        for (String dstDir : dstDirs) {
+            dstSet.add(dstDir);
+        }
+        return dstSet;
+    }
+
+
+    /**
+     * Deletes directory with subdirs and subfolders
+     *
+     * @param dir Directory to delete
+     * @author Cloud
+     */
+    public static void deleteDirectory(File dir) {
+        if (dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                File f = new File(dir, children[i]);
+                deleteDirectory(f);
+            }
+            dir.delete();
+        } else dir.delete();
+    }
+
 
     private static void LaunchKPlus() {
         // TODO: 21.10.2016 Realize
