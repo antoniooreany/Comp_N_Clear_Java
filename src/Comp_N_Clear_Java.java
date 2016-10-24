@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,33 +15,32 @@ public class Comp_N_Clear_Java {
     private static String dstPath = "D:\\cons_1\\base";
 
     public static void main(String[] args) throws IOException {
-        HashSet<String> holdNamesArray = ReadRawLinesAndWriteToArray(srcPath);
+        Set<String> holdNamesArray = ReadLinesAndWriteParsedLinesToSet(srcPath);
         RemoveUnnecessaryDirectories(holdNamesArray, dstPath);
         LaunchKPlus(uVedaPath, consPath, SYSTEM);
     }
 
-    private static HashSet<String> ReadRawLinesAndWriteToArray(String srcPath) throws IOException {
-        String rawLine;
+    private static Set<String> ReadLinesAndWriteParsedLinesToSet(String srcPath) throws IOException {
         String line;
-        HashSet<String> lines = new HashSet<>();
+        String parsedLine;
+        Set<String> parsedLines = new HashSet<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(srcPath))) {
-            while ((rawLine = reader.readLine()) != null) {
-                line = parseLines(rawLine);
-                lines.add(line);
+            while ((line = reader.readLine()) != null) {
+                parsedLine = parseLines(line);
+                parsedLines.add(parsedLine);
             }
         }
-        return lines;
+        return parsedLines;
     }
 
-    private static String parseLines(String rawLine) {
+    private static String parseLines(String line) {
         Pattern p = Pattern.compile("([A-Z]+),.*$");
-        Matcher m = p.matcher(rawLine);
-        boolean matches = m.matches();
-        String line = m.group(1);
-        return line;
+        Matcher m = p.matcher(line);
+        m.matches();
+        return m.group(1);
     }
 
-    private static void RemoveUnnecessaryDirectories(HashSet<String> holdNamesSet, String dstPath) {
+    private static void RemoveUnnecessaryDirectories(Set<String> holdNamesSet, String dstPath) {
 
         HashSet<String> dstSet = getDstDirsSet(dstPath);
         HashSet<String> elemsToDelete = (HashSet<String>) dstSet.clone();
