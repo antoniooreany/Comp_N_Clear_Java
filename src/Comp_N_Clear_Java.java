@@ -9,16 +9,19 @@ import java.util.regex.Pattern;
  * Created by gorshkov on 21.10.2016.
  */
 public class Comp_N_Clear_Java {
+    private static String SYSTEM = "SYSTEM";
+
     public static void main(String[] args) throws IOException {
+        String consPath = "D:\\cons_1\\";
+        String uVedaPath = "U:\\Veda\\VEDA3000\\CONS_1\\";
         String srcPath = "D:\\cons_1\\receive\\LAST_REC.TXT";
         String dstPath = "D:\\cons_1\\base";
-        String uVedaPath = "U:\\Veda\\VEDA3000\\CONS_1\\SYSTEM";
 
         HashSet<String> holdNamesArray = ReadRawLinesAndWriteToArray(srcPath);
 
         RemoveUnnecessaryDirectories(holdNamesArray, dstPath);
 
-        LaunchKPlus(uVedaPath, dstPath);
+        LaunchKPlus(uVedaPath, consPath, SYSTEM);
     }
 
     private static HashSet<String> ReadRawLinesAndWriteToArray(String srcPath) throws IOException {
@@ -95,6 +98,16 @@ public class Comp_N_Clear_Java {
      * @param dir Directory to delete
      * @author Cloud
      */
+    public static void deleteDirectoryContent(File dir) {
+        if (dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                File f = new File(dir, children[i]);
+                deleteDirectory(f);
+            }
+        } else dir.delete();
+    }
+
     public static void deleteDirectory(File dir) {
         if (dir.isDirectory()) {
             String[] children = dir.list();
@@ -107,20 +120,7 @@ public class Comp_N_Clear_Java {
     }
 
 
-    private static void LaunchKPlus(String uVedaPath, String dstPath) throws IOException {
-        // TODO: 21.10.2016 Realize
-        if (!copyDir(uVedaPath, dstPath)) {
-            throw new FileNotFoundException("Files has not copied from " + uVedaPath + " to " + dstPath);
-        }
-        deleteFile(dstPath + "cd.zip");
-        deleteFile(dstPath + "cef2272.zip");
-
-        ProcessBuilder pb = new ProcessBuilder("D:\\cons_1\\cons.exe");
-        // TODO: 22.10.2016 Maybe I must use not "cons.exe" but "cons.lnk"
-        pb.start();
-    }
-
-    private static boolean deleteFile(String filePath) {
+    public static boolean deleteFile(String filePath) {
         File file = new File(filePath);
         if (file.delete()) {
             return true;
@@ -129,10 +129,8 @@ public class Comp_N_Clear_Java {
         }
     }
 
-
-    private static final int BUFFER_SIZE = 1024;
-
-    private static boolean copyDir(final String src, final String dst) {
+    // TODO: 24.10.2016 Add ArrayOfNamesExceptions
+    static boolean copyDir(final String src, final String dst) {
         System.out.println("Копируем каталог: " + src);
         final File srcFile = new File(src);
         final File dstFile = new File(dst);
@@ -158,7 +156,8 @@ public class Comp_N_Clear_Java {
         }
     }
 
-    private static boolean copyFile(final String src, final String dst) {
+    static boolean copyFile(final String src, final String dst) {
+        final int BUFFER_SIZE = 1024;
         System.out.println("Копируем файл: " + src);
         final File srcFile = new File(src);
         final File dstFile = new File(dst);
@@ -183,5 +182,21 @@ public class Comp_N_Clear_Java {
         } else {
             return false;
         }
+    }
+
+    private static void LaunchKPlus(String uVedaPath, String consPath, String SYSTEM) throws IOException {
+        // TODO: 21.10.2016 Realize
+        String uVedaSYSTEMPath = uVedaPath + SYSTEM;
+        String dstSYSTEMPath = consPath + SYSTEM;
+        deleteDirectory(new File(dstSYSTEMPath));
+        if (!copyDir(uVedaSYSTEMPath, dstSYSTEMPath)) {
+            throw new FileNotFoundException("Files has not copied from " + uVedaPath + " to " + consPath);
+        }
+//        deleteFile(dstSYSTEMPath + "\\cd.zip");
+//        deleteFile(dstSYSTEMPath + "\\cef2272.zip");
+
+        ProcessBuilder pb = new ProcessBuilder("D:\\cons_1\\cons.exe");
+        // TODO: 22.10.2016 Maybe I must use not "cons.exe" but "cons.lnk"
+        pb.start();
     }
 }
