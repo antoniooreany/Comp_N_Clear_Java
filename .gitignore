@@ -15,3 +15,7 @@ hs_err_pid*
 
 /.idea/
 /Comp_N_Clear_Java.iml
+*.TXT
+CONS.CFG
+
+
