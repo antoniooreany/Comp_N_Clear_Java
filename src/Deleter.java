@@ -3,7 +3,7 @@ import java.io.File;
 /**
  * Created by gorshkov on 24.10.2016.
  */
-public class Delete {
+public class Deleter {
     /**
      * Deletes directory with subdirs and subfolders
      *

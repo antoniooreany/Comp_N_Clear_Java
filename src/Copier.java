@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 /**
  * Created by gorshkov on 24.10.2016.
  */
-public class Copy {
+public class Copier {
     // TODO: 24.10.2016 Add ArrayOfNamesExceptions which should not be copied.
     static boolean copyDir(final String src, final String dst) {
         System.out.println("Копируем каталог: " + src);

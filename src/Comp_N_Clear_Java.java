@@ -56,7 +56,7 @@ public class Comp_N_Clear_Java {
         for (String elemToDelete :
                 elemsToDelete) {
             File dir = new File(dstPath + "//" + elemToDelete);
-            Delete.deleteDirectory(dir);
+            Deleter.deleteDirectory(dir);
         }
     }
 
@@ -84,12 +84,12 @@ public class Comp_N_Clear_Java {
         // TODO: 21.10.2016 Realize
         String uVedaSYSTEMPath = uVedaPath + SYSTEM;
         String dstSYSTEMPath = consPath + SYSTEM;
-        Delete.deleteDirectory(new File(dstSYSTEMPath));
-        if (!Copy.copyDir(uVedaSYSTEMPath, dstSYSTEMPath)) {
+        Deleter.deleteDirectory(new File(dstSYSTEMPath));
+        if (!Copier.copyDir(uVedaSYSTEMPath, dstSYSTEMPath)) {
             throw new FileNotFoundException("Files has not copied from " + uVedaPath + " to " + consPath);
         }
-        Delete.deleteFile(dstSYSTEMPath + "\\cd.zip");
-        Delete.deleteFile(dstSYSTEMPath + "\\cef2272.zip");
+        Deleter.deleteFile(dstSYSTEMPath + "\\cd.zip");
+        Deleter.deleteFile(dstSYSTEMPath + "\\cef2272.zip");
         ProcessBuilder pb = new ProcessBuilder("D:\\cons_1\\cons.exe");
         // TODO: 22.10.2016 Maybe I must use not "cons.exe" but "cons.lnk"
         pb.start();
