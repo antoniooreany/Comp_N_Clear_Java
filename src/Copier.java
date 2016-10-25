@@ -7,7 +7,7 @@ import java.util.logging.Logger;
  */
 public class Copier {
     // TODO: 24.10.2016 Add ArrayOfNamesExceptions which should not be copied.
-    static boolean copyDir(final String src, final String dst) {
+    static boolean copyDir(final String src, final String dst, String exceptFilename0, String exceptFilename1) {
         System.out.println("Копируем каталог: " + src);
         final File srcFile = new File(src);
         final File dstFile = new File(dst);
@@ -16,15 +16,17 @@ public class Copier {
             File nextSrcFile;
             String nextSrcFilename, nextDstFilename;
             for (String filename : srcFile.list()) {
-                nextSrcFilename = srcFile.getAbsolutePath()
-                        + File.separator + filename;
-                nextDstFilename = dstFile.getAbsolutePath()
-                        + File.separator + filename;
-                nextSrcFile = new File(nextSrcFilename);
-                if (nextSrcFile.isDirectory()) {
-                    copyDir(nextSrcFilename, nextDstFilename);
-                } else {
-                    copyFile(nextSrcFilename, nextDstFilename);
+                if (!(filename.equals(exceptFilename0)) && !(filename.equals(exceptFilename1))) {
+                    nextSrcFilename = srcFile.getAbsolutePath()
+                            + File.separator + filename;
+                    nextDstFilename = dstFile.getAbsolutePath()
+                            + File.separator + filename;
+                    nextSrcFile = new File(nextSrcFilename);
+                    if (nextSrcFile.isDirectory()) {
+                        copyDir(nextSrcFilename, nextDstFilename, exceptFilename0, exceptFilename1);
+                    } else {
+                        copyFile(nextSrcFilename, nextDstFilename);
+                    }
                 }
             }
             return true;

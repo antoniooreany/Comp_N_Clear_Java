@@ -85,11 +85,11 @@ public class Comp_N_Clear_Java {
         String uVedaSYSTEMPath = uVedaPath + SYSTEM;
         String dstSYSTEMPath = consPath + SYSTEM;
         Deleter.deleteDirectory(new File(dstSYSTEMPath));
-        if (!Copier.copyDir(uVedaSYSTEMPath, dstSYSTEMPath)) {
+        if (!Copier.copyDir(uVedaSYSTEMPath, dstSYSTEMPath, "cd.zip", "cef2272.zip")) {
             throw new FileNotFoundException("Files has not copied from " + uVedaPath + " to " + consPath);
         }
-        Deleter.deleteFile(dstSYSTEMPath + "\\cd.zip");
-        Deleter.deleteFile(dstSYSTEMPath + "\\cef2272.zip");
+//        Deleter.deleteFile(dstSYSTEMPath + "\\cd.zip");
+//        Deleter.deleteFile(dstSYSTEMPath + "\\cef2272.zip");
         ProcessBuilder pb = new ProcessBuilder("D:\\cons_1\\cons.exe");
         // TODO: 22.10.2016 Maybe I must use not "cons.exe" but "cons.lnk"
         pb.start();
