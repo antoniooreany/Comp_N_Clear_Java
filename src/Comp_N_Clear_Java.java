@@ -8,16 +8,18 @@ import java.util.regex.Pattern;
  * Created by gorshkov on 21.10.2016.
  */
 public class Comp_N_Clear_Java {
-    private static String SYSTEM = "SYSTEM";
-    private static String consPath = "D:\\cons_1\\";
-    private static String uVedaPath = "U:\\Veda\\VEDA3000\\CONS_1\\";
-    private static String srcPath = "D:\\cons_1\\receive\\LAST_REC.TXT";
-    private static String dstPath = "D:\\cons_1\\base";
+    private static final String SYSTEM = "SYSTEM";
+    private static final String consPath = "D:\\cons_1\\";
+    private static final String uVedaPath = "U:\\Veda\\VEDA3000\\CONS_1\\";
+    private static final String srcPath = "D:\\cons_1\\receive\\LAST_REC.TXT";
+    private static final String dstPath = "D:\\cons_1\\base";
+    private static final String exceptFilename1 = "cef2272.zip";
+    private static final String exceptFilename0 = "cd.zip";
 
     public static void main(String[] args) throws IOException {
         Set<String> holdNamesArray = ReadLinesAndWriteParsedLinesToSet(srcPath);
         RemoveUnnecessaryDirectories(holdNamesArray, dstPath);
-        LaunchKPlus(uVedaPath, consPath, SYSTEM);
+        LaunchKPlus(uVedaPath, consPath, SYSTEM, exceptFilename0, exceptFilename1);
     }
 
     private static Set<String> ReadLinesAndWriteParsedLinesToSet(String srcPath) throws IOException {
@@ -80,12 +82,12 @@ public class Comp_N_Clear_Java {
         return dstSet;
     }
 
-    private static void LaunchKPlus(String uVedaPath, String consPath, String SYSTEM) throws IOException {
+    private static void LaunchKPlus(String uVedaPath, String consPath, String SYSTEM, String exceptFilename0, String exceptFilename1) throws IOException {
         // TODO: 21.10.2016 Realize
         String uVedaSYSTEMPath = uVedaPath + SYSTEM;
         String dstSYSTEMPath = consPath + SYSTEM;
         Deleter.deleteDirectory(new File(dstSYSTEMPath));
-        if (!Copier.copyDir(uVedaSYSTEMPath, dstSYSTEMPath, "cd.zip", "cef2272.zip")) {
+        if (!Copier.copyDir(uVedaSYSTEMPath, dstSYSTEMPath, exceptFilename0, exceptFilename1)) {
             throw new FileNotFoundException("Files has not copied from " + uVedaPath + " to " + consPath);
         }
 //        Deleter.deleteFile(dstSYSTEMPath + "\\cd.zip");
