@@ -92,8 +92,8 @@ public class Comp_N_Clear_Java {
         }
 //        Deleter.deleteFile(dstSYSTEMPath + "\\cd.zip");
 //        Deleter.deleteFile(dstSYSTEMPath + "\\cef2272.zip");
-        ProcessBuilder pb = new ProcessBuilder("D:\\cons_1\\cons.exe");
-        // TODO: 22.10.2016 Maybe I must use not "cons.exe" but "cons.lnk"
+        ProcessBuilder pb = new ProcessBuilder("startConsLnk.cmd");
+        // 26.10.2016 Maybe I must use not "cons.exe" but "cons.lnk". Done by running "startConsLnk.cmd", which can run "cons.lnk".
         pb.start();
     }
 }
