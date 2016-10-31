@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -63,7 +64,7 @@ public class Comp_N_Clear_Java {
     }
 
     private static HashSet<String> getDirsToRemove(HashSet<String> holdNamesSet, HashSet<String> dstSet) {
-        HashSet<String> dirsToRemove = new HashSet<String>();
+        HashSet<String> dirsToRemove = new HashSet<>();
         for (String holdNamesSetElem :
                 holdNamesSet) {
             dstSet.remove(holdNamesSetElem);
@@ -75,10 +76,8 @@ public class Comp_N_Clear_Java {
     private static HashSet<String> getDstDirsSet(String dstPath) {
         File dstFile = new File(dstPath);
         String[] dstDirs = dstFile.list();
-        HashSet<String> dstSet = new HashSet();
-        for (String dstDir : dstDirs) {
-            dstSet.add(dstDir);
-        }
+        HashSet<String> dstSet = new HashSet<>();
+        Collections.addAll(dstSet, dstDirs);
         return dstSet;
     }
 
@@ -93,9 +92,10 @@ public class Comp_N_Clear_Java {
 //        Deleter.deleteFile(dstSYSTEMPath + "\\cd.zip");
 //        Deleter.deleteFile(dstSYSTEMPath + "\\cef2272.zip");
 //        ProcessBuilder pb = new ProcessBuilder("D:\\cons_1\\cons.lnk");
-//        ProcessBuilder pb = new ProcessBuilder("startConsLnk.cmd");
-        ProcessBuilder pb = new ProcessBuilder(
-                "C:\\Users\\gorshkov\\IdeaProjects\\Comp_N_Clear_Java\\out\\production\\Comp_N_Clear_Java\\startConsLnk.cmd");
+        System.out.println("U're here now:  " + new File(".").getAbsolutePath());
+        ProcessBuilder pb = new ProcessBuilder("out\\production\\Comp_N_Clear_Java\\startConsLnk_test.cmd");
+//        ProcessBuilder pb = new ProcessBuilder(
+//                "C:\\Users\\gorshkov\\IdeaProjects\\Comp_N_Clear_Java\\out\\production\\Comp_N_Clear_Java\\startConsLnk.cmd");
         // 26.10.2016 Maybe I must use not "cons.exe" but "cons.lnk". Done by running "startConsLnk.cmd", which can run "cons.lnk".
         pb.start();
     }
