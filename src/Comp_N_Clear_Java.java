@@ -89,14 +89,9 @@ public class Comp_N_Clear_Java {
         if (!Copier.copyDir(uVedaSYSTEMPath, dstSYSTEMPath, exceptFilename0, exceptFilename1)) {
             throw new FileNotFoundException("Files has not copied from " + uVedaPath + " to " + consPath);
         }
-//        Deleter.deleteFile(dstSYSTEMPath + "\\cd.zip");
-//        Deleter.deleteFile(dstSYSTEMPath + "\\cef2272.zip");
-//        ProcessBuilder pb = new ProcessBuilder("D:\\cons_1\\cons.lnk");
-        System.out.println("U're here now:  " + new File(".").getAbsolutePath());
-        ProcessBuilder pb = new ProcessBuilder("out\\production\\Comp_N_Clear_Java\\startConsLnk_test.cmd");
-//        ProcessBuilder pb = new ProcessBuilder(
-//                "C:\\Users\\gorshkov\\IdeaProjects\\Comp_N_Clear_Java\\out\\production\\Comp_N_Clear_Java\\startConsLnk.cmd");
-        // 26.10.2016 Maybe I must use not "cons.exe" but "cons.lnk". Done by running "startConsLnk.cmd", which can run "cons.lnk".
+//        System.out.println("U're here now:  " + new File(".").getAbsolutePath());
+        ProcessBuilder pb = new ProcessBuilder("D:\\cons_1\\cons.exe");
+        ProcessBuilder directory = pb.directory(new File("D:\\cons_1\\Folder"));
         pb.start();
     }
 }
