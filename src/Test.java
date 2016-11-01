@@ -7,10 +7,10 @@ import java.io.IOException;
 public class Test {
     public static void main(String[] args) throws IOException {
         System.out.println("U're here now:  " + new File(".").getAbsolutePath());
-//        ProcessBuilder pb = new ProcessBuilder("out\\production\\Comp_N_Clear_Java\\startConsLnk_test.cmd");
         ProcessBuilder pb = new ProcessBuilder("..\\..\\..\\startConsLnk_test.cmd");
         System.out.println("Hiiii !!!");
         // 26.10.2016 Maybe I must use not "cons.exe" but "cons.lnk". Done by running "startConsLnk.cmd", which can run "cons.lnk".
         pb.start();
+        System.out.println("Hiiii again!!!");
     }
 }
