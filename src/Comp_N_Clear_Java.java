@@ -44,7 +44,6 @@ public class Comp_N_Clear_Java {
     }
 
     private static void RemoveUnnecessaryDirectories(Set<String> holdNamesSet, String dstPath) {
-
         HashSet<String> dstSet = getDstDirsSet(dstPath);
         HashSet<String> elemsToDelete = (HashSet<String>) dstSet.clone();
         for (String dstSetElem :
