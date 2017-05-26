@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 public class Copier {
     // 25.10.2016 Added ArrayOfNamesExceptions which should not be copied.
     static boolean copyDir(final String src, final String dst, String exceptFilename0, String exceptFilename1) {
-        System.out.println("Копируем каталог: " + src);
+        System.out.println("Copying directory: " + src);
         final File srcFile = new File(src);
         final File dstFile = new File(dst);
         if (srcFile.exists() && srcFile.isDirectory() && !dstFile.exists()) {
@@ -37,7 +37,7 @@ public class Copier {
 
     static boolean copyFile(final String src, final String dst) {
         final int BUFFER_SIZE = 1024;
-        System.out.println("Копируем файл: " + src);
+        System.out.println("Copying file: " + src);
         final File srcFile = new File(src);
         final File dstFile = new File(dst);
         if (srcFile.exists() && srcFile.isFile() && !dstFile.exists()) {
