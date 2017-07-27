@@ -37,7 +37,7 @@ public class Comp_N_Clear_Java {
     }
 
     private static String parseLines(String line) {
-        Pattern p = Pattern.compile("([A-Z]+),.*$");
+        Pattern p = Pattern.compile("([A-Z0-9]+),.*$");
         Matcher m = p.matcher(line);
         m.matches();
         return m.group(1);
