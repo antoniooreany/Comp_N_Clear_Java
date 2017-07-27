@@ -19,8 +19,13 @@ public class Comp_N_Clear_Java {
 
     public static void main(String[] args) throws IOException {
         Set<String> holdNamesArray = ReadLinesAndWriteParsedLinesToSet(SRC_PATH);
+        System.out.println("holdNamesArray created");
+
         RemoveUnnecessaryDirectories(holdNamesArray, DST_PATH);
+        System.out.println("Unnecessary directories removed");
+
         LaunchKPlus(U_VEDA_PATH, CONS_PATH, SYSTEM, EXCEPT_FILENAME_0, EXCEPT_FILENAME_1);
+        System.out.println("KPlus launched");
     }
 
     private static Set<String> ReadLinesAndWriteParsedLinesToSet(String srcPath) throws IOException {
